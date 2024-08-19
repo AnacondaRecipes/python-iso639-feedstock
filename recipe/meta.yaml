@@ -6,8 +6,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: 97e63b5603e085c6a56a12a95740010e75d9134e0aab767e0978b53fd8824f13
+  - url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+    sha256: 97e63b5603e085c6a56a12a95740010e75d9134e0aab767e0978b53fd8824f13
+  # file needed for tests, not included in the pypi tarball
+  - url: https://raw.githubusercontent.com/jacksonllee/iso639/v{{ version }}/CHANGELOG.md
+    sha256: 8f8da6ba0cce1e1e2065a1082c74f0e5d7144d18de050efd13552fa552d53746
 
 build:
   number: 0
@@ -26,12 +29,15 @@ requirements:
 test:
   imports:
     - iso639
-  commands:
-    - pip check
-  source_files:
-    - tests
   requires:
     - pip
+    - pytest
+  source_files:
+    - tests
+    - CHANGELOG.md
+  commands:
+    - pip check
+    - pytest -vv --durations=0 --strict-markers tests
 
 about:
   home: https://github.com/jacksonllee/iso639

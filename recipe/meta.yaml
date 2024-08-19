@@ -37,6 +37,8 @@ test:
     - CHANGELOG.md
   commands:
     - pip check
+    # see section tool.pytest.ini_options in pyproject.toml for the
+    # additional parameters
     - pytest -vv --durations=0 --strict-markers tests
 
 about:

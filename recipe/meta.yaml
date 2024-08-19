@@ -10,32 +10,40 @@ source:
   sha256: 97e63b5603e085c6a56a12a95740010e75d9134e0aab767e0978b53fd8824f13
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  skip: true  # [py<38]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
-    - python >=3.8
+    - python
     - setuptools >=65.3.0
     - wheel
     - pip
   run:
-    - python >=3.8
+    - python
 
 test:
   imports:
     - iso639
   commands:
     - pip check
+  source_files:
+    - tests
   requires:
     - pip
 
 about:
-  summary: Look-up utilities for ISO 639 language codes and names
   home: https://github.com/jacksonllee/iso639
   license: Apache-2.0
   license_file: LICENSE.txt
+  license_family: Apache
+  summary: Look-up utilities for ISO 639 language codes and names
+  description: |
+    python-iso639 is a Python package for ISO 639 language codes,
+    names, and other associated information.
+  dev_url: https://github.com/jacksonllee/iso639
+  doc_url: https://github.com/jacksonllee/iso639/blob/main/README.md
 
 extra:
   recipe-maintainers:
